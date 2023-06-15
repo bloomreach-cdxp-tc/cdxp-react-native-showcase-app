@@ -1,7 +1,10 @@
 PODS:
+  - AnyCodable-FlightSchool (0.4.0)
   - boost (1.76.0)
   - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
+  - ExponeaSDK (2.16.3):
+    - SwiftSoup (= 2.4.3)
   - FBLazyVector (0.71.11)
   - FBReactNativeSpec (0.71.11):
     - RCT-Folly (= 2021.07.22.00)
@@ -329,6 +332,10 @@ PODS:
   - React-jsinspector (0.71.11)
   - React-logger (0.71.11):
     - glog
+  - react-native-exponea-sdk (1.5.1):
+    - AnyCodable-FlightSchool (= 0.4.0)
+    - ExponeaSDK (= 2.16.3)
+    - React-Core
   - React-perflogger (0.71.11)
   - React-RCTActionSheet (0.71.11):
     - React-Core/RCTActionSheetHeaders (= 0.71.11)
@@ -414,6 +421,7 @@ PODS:
     - React-logger (= 0.71.11)
     - React-perflogger (= 0.71.11)
   - SocketRocket (0.6.0)
+  - SwiftSoup (2.4.3)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -464,6 +472,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
+  - react-native-exponea-sdk (from `../node_modules/react-native-exponea-sdk`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -481,7 +490,9 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - AnyCodable-FlightSchool
     - CocoaAsyncSocket
+    - ExponeaSDK
     - Flipper
     - Flipper-Boost-iOSX
     - Flipper-DoubleConversion
@@ -495,6 +506,7 @@ SPEC REPOS:
     - libevent
     - OpenSSL-Universal
     - SocketRocket
+    - SwiftSoup
     - YogaKit
 
 EXTERNAL SOURCES:
@@ -538,6 +550,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
+  react-native-exponea-sdk:
+    :path: "../node_modules/react-native-exponea-sdk"
   React-perflogger:
     :path: "../node_modules/react-native/ReactCommon/reactperflogger"
   React-RCTActionSheet:
@@ -568,9 +582,11 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
+  AnyCodable-FlightSchool: 9bf42632b5256c78710e2f4fb18ce78e89180883
   boost: 57d2868c099736d80fcd648bf211b4431e51a558
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
+  ExponeaSDK: 53b30453dd9fb347e0641e436f12d30788727e25
   FBLazyVector: c511d4cd0210f416cb5c289bd5ae6b36d909b048
   FBReactNativeSpec: a911fb22def57aef1d74215e8b6b8761d25c1c54
   Flipper: 26fc4b7382499f1281eb8cb921e5c3ad6de91fe0
@@ -601,6 +617,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 18b5b33c5f2687a784a61bc8176611b73524ae77
   React-jsinspector: b6ed4cb3ffa27a041cd440300503dc512b761450
   React-logger: 186dd536128ae5924bc38ed70932c00aa740cd5b
+  react-native-exponea-sdk: 27661b64c0feea9df047de5caaa6eb9bc6c9ee3a
   React-perflogger: e706562ab7eb8eb590aa83a224d26fa13963d7f2
   React-RCTActionSheet: 57d4bd98122f557479a3359ad5dad8e109e20c5a
   React-RCTAnimation: ccf3ef00101ea74bda73a045d79a658b36728a60
@@ -615,6 +632,7 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: 4817d63dbc9d658f8dc0ec56bd9b83ce531129f0
   ReactCommon: 08723d2ed328c5cbcb0de168f231bc7bae7f8aa1
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
+  SwiftSoup: 3384f2e618cfc1b3cbc7852c16692fe8de13fb8f
   Yoga: f7decafdc5e8c125e6fa0da38a687e35238420fa
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
