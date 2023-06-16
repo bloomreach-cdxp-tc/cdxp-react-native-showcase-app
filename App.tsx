@@ -39,69 +39,17 @@ type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
-// function Section({children, title}: SectionProps): JSX.Element {
-//   const isDarkMode = useColorScheme() === 'dark';
-//   return (
-//     <View style={styles.sectionContainer}>
-//       <Text
-//         style={[
-//           styles.sectionTitle,
-//           {
-//             color: isDarkMode ? Colors.white : Colors.black,
-//           },
-//         ]}>
-//         {title}
-//       </Text>
-//       <Text
-//         style={[
-//           styles.sectionDescription,
-//           {
-//             color: isDarkMode ? Colors.light : Colors.dark,
-//           },
-//         ]}>
-//         {children}
-//       </Text>
-//     </View>
-//   );
-// }
-
 function App(): JSX.Element {
   useEffect(() => {
+    Exponea.requestIosPushAuthorization()
+      .then(accepted => {
+        console.log(
+          `User has ${accepted ? 'accepted' : 'rejected'} push notifications.`,
+        );
+      })
+      .catch(error => console.log(error.message));
+
     checkExponeaConfigStatus();
-    // Exponea.setAppInboxProvider({
-    //   appInboxButton: {
-    //     textOverride: 'Nix working!',
-    //     textSize: '16sp',
-    //     textWeight: 'bold',
-    //   },
-    //   detailView: {
-    //     title: {
-    //       textColor: '#262626',
-    //       textSize: '20sp',
-    //     },
-    //     content: {
-    //       textColor: '#262626',
-    //       textSize: '16sp',
-    //     },
-    //     button: {
-    //       textSize: '16sp',
-    //       textColor: '#262626',
-    //       backgroundColor: '#ffd500',
-    //       borderRadius: '10dp',
-    //     },
-    //   },
-    //   listView: {
-    //     list: {
-    //       backgroundColor: 'blue',
-    //       item: {
-    //         content: {
-    //           textSize: '16sp',
-    //           textColor: '#262626',
-    //         },
-    //       },
-    //     },
-    //   },
-    // });
   }, []);
   const isDarkMode = false;
 
@@ -134,8 +82,6 @@ function App(): JSX.Element {
     authorizationToken:
       'jzxkj4ed9xm2ezt92137ldq4kya4275zr699myz6cew3mcmq6f2rcxuddu444sxw',
     baseUrl: 'https://api.eu1.exponea.com',
-    // allowDefaultCustomerProperties: false,
-    // advancedAuthEnabled: (advancedAuthKey || '').trim().length != 0,
     ios: {
       appGroup: 'group.react-native-showcase-app',
     },
@@ -159,11 +105,32 @@ function App(): JSX.Element {
           colorCode: '#edf7ed',
         });
       } else {
+        console.log('Exponea SDK Config Check:', undefined);
+        setExponeaSDKStatus({
+          running: false,
+          text: 'NOT RUNNING',
+          error: '',
+          colorCode: '#fdeded',
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function configureExponea(configuration: Configuration) {
+    try {
+      if (!(await Exponea.isConfigured())) {
+        Exponea.setLogLevel(LogLevel.VERBOSE);
+
         await Exponea.setAppInboxProvider({
           appInboxButton: {
-            textOverride: 'Custom Text',
+            textOverride: 'Custom Text App Inbox',
             textSize: '16sp',
+            textColor: 'white',
+            backgroundColor: '#00b3db',
             textWeight: 'bold',
+            showIcon: false,
           },
           detailView: {
             title: {
@@ -193,25 +160,11 @@ function App(): JSX.Element {
             },
           },
         });
-        console.log('Exponea SDK Config Check:', undefined);
-        setExponeaSDKStatus({
-          running: false,
-          text: 'NOT RUNNING',
-          error: '',
-          colorCode: '#fdeded',
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
-  async function configureExponea(configuration: Configuration) {
-    try {
-      if (!(await Exponea.isConfigured())) {
-        Exponea.configure(configuration);
-        Exponea.setLogLevel(LogLevel.VERBOSE);
-        checkExponeaConfigStatus();
+        await Exponea.configure(configuration);
+
+        Exponea.identifyCustomer({registered: '123'}, {}),
+          checkExponeaConfigStatus();
       } else {
         console.log('Exponea SDK already configured.');
       }
@@ -220,11 +173,11 @@ function App(): JSX.Element {
     }
   }
 
+  function checkPushSetup() {
+    Exponea.checkPushSetup();
+  }
+
   function trackTestEvent() {
-    Exponea.identifyCustomer(
-      {registered: '123'}, // customer identifiers
-      {}, // customer properties
-    );
     if (exponeaSDKStatus.running) {
       console.log('Tracking test event...');
       Exponea.trackEvent('react_native_test_event', {

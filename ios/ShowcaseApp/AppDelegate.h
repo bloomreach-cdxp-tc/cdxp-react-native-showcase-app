@@ -1,6 +1,6 @@
-#import <RCTAppDelegate.h>
+#import <React/RCTBridgeDelegate.h>
 #import <UIKit/UIKit.h>
+#import <ExponeaRNAppDelegate.h>
 
-@interface AppDelegate : RCTAppDelegate
-
+@interface AppDelegate : ExponeaRNAppDelegate<RCTBridgeDelegate>
 @end
