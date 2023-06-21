@@ -173,10 +173,6 @@ function App(): JSX.Element {
     }
   }
 
-  function checkPushSetup() {
-    Exponea.checkPushSetup();
-  }
-
   function trackTestEvent() {
     if (exponeaSDKStatus.running) {
       console.log('Tracking test event...');
