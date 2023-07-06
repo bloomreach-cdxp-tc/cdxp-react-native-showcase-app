@@ -16,9 +16,6 @@ import {
   Text,
   useColorScheme,
   View,
-  Button,
-  Alert,
-  Pressable,
   Image,
 } from 'react-native';
 
@@ -34,6 +31,8 @@ import AppInboxButton from 'react-native-exponea-sdk/lib/AppInboxButton';
 import Exponea from 'react-native-exponea-sdk';
 import {LogLevel} from 'react-native-exponea-sdk/lib/ExponeaType';
 import Configuration from 'react-native-exponea-sdk/lib/Configuration';
+
+import {Button} from '@react-native-material/core';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -207,25 +206,42 @@ function App(): JSX.Element {
           </View>
 
           <View style={styles.buttonStack}>
-            <Pressable
+            <Button
               style={initButtonsStyle}
-              onPress={() => configureExponea(configuration)}>
-              <Text style={styles.text}>Initialize SDK</Text>
-            </Pressable>
+              title={props => <Text style={styles.text}>Initialize SDK</Text>}
+              onPress={() => configureExponea(configuration)}
+              disabled={exponeaSDKStatus.running}
+            />
 
-            <Pressable style={actionButtonsStyle} onPress={trackTestEvent}>
-              <Text style={styles.text}>Track Event</Text>
-            </Pressable>
+            <Button
+              style={actionButtonsStyle}
+              title={props => <Text style={styles.text}>Track Event</Text>}
+              onPress={trackTestEvent}
+              disabled={!exponeaSDKStatus.running}
+            />
+            <Button
+              style={actionButtonsStyle}
+              title={props => <Text style={styles.text}>Update Customer</Text>}
+              onPress={() => console.log('Update Customer Button')}
+              disabled={!exponeaSDKStatus.running}
+            />
+            <Button
+              style={actionButtonsStyle}
+              title={props => (
+                <Text style={styles.text}>Send In-App Message</Text>
+              )}
+              onPress={() => console.log('Send In-App Message Button')}
+              disabled={!exponeaSDKStatus.running}
+            />
+            <Button
+              style={actionButtonsStyle}
+              title={props => (
+                <Text style={styles.text}>Send Notification</Text>
+              )}
+              onPress={() => console.log('Send Notification Button')}
+              disabled={!exponeaSDKStatus.running}
+            />
 
-            <Pressable style={actionButtonsStyle}>
-              <Text style={styles.text}>Update Customer</Text>
-            </Pressable>
-            <Pressable style={actionButtonsStyle}>
-              <Text style={styles.text}>Send In-App Message</Text>
-            </Pressable>
-            <Pressable style={actionButtonsStyle}>
-              <Text style={styles.text}>Send Notification</Text>
-            </Pressable>
             {exponeaSDKStatus.running && (
               <AppInboxButton style={{width: '100%', height: 50}} />
             )}
@@ -282,25 +298,20 @@ const styles = StyleSheet.create({
   },
   primaryButton: {
     width: '70%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 4,
-    elevation: 3,
     backgroundColor: '#00b3db',
-    margin: 10,
-    disabled: true,
+    marginVertical: '2%',
+    paddingVertical: 2,
   },
+
   disabledButton: {
-    backgroundColor: 'gray',
+    backgroundColor: 'lightgray',
   },
   buttonStack: {
-    flex: 1, // This line will make the button stack take up all available space
+    flex: 1,
     flexDirection: 'column',
-    alignItems: 'center', // This line will center the buttons horizontally
+    alignItems: 'center',
     justifyContent: 'center',
-    width: '100%', // This line will make the button stack take up 100% width
+    width: '100%',
   },
   text: {
     fontSize: 16,
