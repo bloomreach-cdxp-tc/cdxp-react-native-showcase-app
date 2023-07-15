@@ -11,21 +11,13 @@ import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
   ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
   View,
   Image,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 import AppInboxButton from 'react-native-exponea-sdk/lib/AppInboxButton';
 
 import Exponea from 'react-native-exponea-sdk';
@@ -120,50 +112,14 @@ function App(): JSX.Element {
   async function configureExponea(configuration: Configuration) {
     try {
       if (!(await Exponea.isConfigured())) {
+        Exponea.configure(configuration);
         Exponea.setLogLevel(LogLevel.VERBOSE);
 
-        await Exponea.setAppInboxProvider({
-          appInboxButton: {
-            textOverride: 'Custom Text App Inbox',
-            textSize: '16sp',
-            textColor: 'white',
-            backgroundColor: '#00b3db',
-            textWeight: 'bold',
-            showIcon: false,
-          },
-          detailView: {
-            title: {
-              textColor: '#262626',
-              textSize: '20sp',
-            },
-            content: {
-              textColor: '#262626',
-              textSize: '16sp',
-            },
-            button: {
-              textSize: '16sp',
-              textColor: '#262626',
-              backgroundColor: '#ffd500',
-              borderRadius: '10dp',
-            },
-          },
-          listView: {
-            list: {
-              backgroundColor: 'blue',
-              item: {
-                content: {
-                  textSize: '16sp',
-                  textColor: '#262626',
-                },
-              },
-            },
-          },
-        });
-
-        await Exponea.configure(configuration);
-
-        Exponea.identifyCustomer({registered: '123'}, {}),
-          checkExponeaConfigStatus();
+        Exponea.identifyCustomer(
+          {registered: 'showcase_app_user_react_native'},
+          {},
+        );
+        checkExponeaConfigStatus();
       } else {
         console.log('Exponea SDK already configured.');
       }
@@ -172,11 +128,47 @@ function App(): JSX.Element {
     }
   }
 
-  function trackTestEvent() {
+  function trackEvent() {
     if (exponeaSDKStatus.running) {
       console.log('Tracking test event...');
-      Exponea.trackEvent('react_native_test_event', {
-        success: true,
+      Exponea.trackEvent('showcase_app_event', {
+        source_sdk: 'React Native',
+      });
+    }
+  }
+  function updateCustomerAttribute() {
+    if (exponeaSDKStatus.running) {
+      console.log('Updating customer properties...');
+      Exponea.identifyCustomer(
+        {registered: 'showcase_app_user_react_native'},
+        {
+          first_name: 'ShowcaseApp',
+          last_name: 'React Native',
+        },
+      );
+    }
+  }
+  function sendInAppMessageTrigger() {
+    if (exponeaSDKStatus.running) {
+      console.log('Sending In-App Message Trigger...');
+      Exponea.trackEvent('showcase_app_inapp_message_trigger', {
+        source_sdk: 'React Native',
+      });
+    }
+  }
+  function sendAppInboxMessageTrigger() {
+    if (exponeaSDKStatus.running) {
+      console.log('Sending App Inbox Trigger...');
+      Exponea.trackEvent('showcase_app_appinbox_trigger', {
+        source_sdk: 'React Native',
+      });
+    }
+  }
+  function sendNotificationTrigger() {
+    if (exponeaSDKStatus.running) {
+      console.log('Sending Notification Trigger...');
+      Exponea.trackEvent('showcase_app_notification_trigger', {
+        source_sdk: 'React Native',
       });
     }
   }
@@ -204,7 +196,6 @@ function App(): JSX.Element {
               <Text style={styles.highlight}>{exponeaSDKStatus.text}</Text>
             </Text>
           </View>
-
           <View style={styles.buttonStack}>
             <Button
               style={initButtonsStyle}
@@ -212,17 +203,16 @@ function App(): JSX.Element {
               onPress={() => configureExponea(configuration)}
               disabled={exponeaSDKStatus.running}
             />
-
             <Button
               style={actionButtonsStyle}
               title={props => <Text style={styles.text}>Track Event</Text>}
-              onPress={trackTestEvent}
+              onPress={trackEvent}
               disabled={!exponeaSDKStatus.running}
             />
             <Button
               style={actionButtonsStyle}
               title={props => <Text style={styles.text}>Update Customer</Text>}
-              onPress={() => console.log('Update Customer Button')}
+              onPress={updateCustomerAttribute}
               disabled={!exponeaSDKStatus.running}
             />
             <Button
@@ -230,7 +220,13 @@ function App(): JSX.Element {
               title={props => (
                 <Text style={styles.text}>Send In-App Message</Text>
               )}
-              onPress={() => console.log('Send In-App Message Button')}
+              onPress={sendInAppMessageTrigger}
+              disabled={!exponeaSDKStatus.running}
+            />
+            <Button
+              style={actionButtonsStyle}
+              title={props => <Text style={styles.text}>Send App Inbox</Text>}
+              onPress={sendAppInboxMessageTrigger}
               disabled={!exponeaSDKStatus.running}
             />
             <Button
@@ -238,10 +234,9 @@ function App(): JSX.Element {
               title={props => (
                 <Text style={styles.text}>Send Notification</Text>
               )}
-              onPress={() => console.log('Send Notification Button')}
+              onPress={sendNotificationTrigger}
               disabled={!exponeaSDKStatus.running}
             />
-
             {exponeaSDKStatus.running && (
               <AppInboxButton style={{width: '100%', height: 50}} />
             )}
@@ -284,9 +279,8 @@ const styles = StyleSheet.create({
   exponeaStatusBar: {
     marginBottom: 20,
     marginTop: 10,
-    padding: 50,
-    width: '100%', // Set width to 100% to make the box full-width
-    // Adjust the height as needed
+    padding: 20,
+    width: '100%',
   },
   exponeaStatusBarText: {
     fontSize: 14,
