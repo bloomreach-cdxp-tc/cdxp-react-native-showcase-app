@@ -15,6 +15,7 @@ import {
   Text,
   View,
   Image,
+  Platform,
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
@@ -32,13 +33,17 @@ type SectionProps = PropsWithChildren<{
 
 function App(): JSX.Element {
   useEffect(() => {
-    Exponea.requestIosPushAuthorization()
-      .then(accepted => {
-        console.log(
-          `User has ${accepted ? 'accepted' : 'rejected'} push notifications.`,
-        );
-      })
-      .catch(error => console.log(error.message));
+    if (Platform.OS == 'ios') {
+      Exponea.requestIosPushAuthorization()
+        .then(accepted => {
+          console.log(
+            `User has ${
+              accepted ? 'accepted' : 'rejected'
+            } push notifications.`,
+          );
+        })
+        .catch(error => console.log(error.message));
+    }
 
     checkExponeaConfigStatus();
   }, []);
@@ -76,10 +81,10 @@ function App(): JSX.Element {
     ios: {
       appGroup: 'group.react-native-showcase-app',
     },
-    // android: {
-    //   pushIconResourceName: 'push_icon',
-    //   pushAccentColorRGBA: '161, 226, 200, 220',
-    // },
+    android: {
+      pushIconResourceName: 'push_icon',
+      pushAccentColorRGBA: '161, 226, 200, 220',
+    },
   };
 
   async function checkExponeaConfigStatus() {
@@ -113,6 +118,7 @@ function App(): JSX.Element {
     try {
       if (!(await Exponea.isConfigured())) {
         Exponea.configure(configuration);
+
         Exponea.setLogLevel(LogLevel.VERBOSE);
 
         Exponea.identifyCustomer(
