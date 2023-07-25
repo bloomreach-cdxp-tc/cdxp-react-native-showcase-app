@@ -58,3 +58,11 @@ target 'ShowcaseApp' do
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
   end
 end
+
+target 'BRNotificationContentExtension' do
+  pod 'ExponeaSDK-Notifications'
+end
+
+target 'BRNotificationServiceExtension' do
+  pod 'ExponeaSDK-Notifications'
+end

@@ -5,6 +5,7 @@ PODS:
   - DoubleConversion (1.1.6)
   - ExponeaSDK (2.16.3):
     - SwiftSoup (= 2.4.3)
+  - ExponeaSDK-Notifications (2.16.4)
   - FBLazyVector (0.71.11)
   - FBReactNativeSpec (0.71.11):
     - RCT-Folly (= 2021.07.22.00)
@@ -429,6 +430,7 @@ PODS:
 DEPENDENCIES:
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
+  - ExponeaSDK-Notifications
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
   - Flipper (= 0.125.0)
@@ -493,6 +495,7 @@ SPEC REPOS:
     - AnyCodable-FlightSchool
     - CocoaAsyncSocket
     - ExponeaSDK
+    - ExponeaSDK-Notifications
     - Flipper
     - Flipper-Boost-iOSX
     - Flipper-DoubleConversion
@@ -587,6 +590,7 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   ExponeaSDK: 53b30453dd9fb347e0641e436f12d30788727e25
+  ExponeaSDK-Notifications: d58eed5605ae3609bee35db74bcb1ec772b74ba6
   FBLazyVector: c511d4cd0210f416cb5c289bd5ae6b36d909b048
   FBReactNativeSpec: a911fb22def57aef1d74215e8b6b8761d25c1c54
   Flipper: 26fc4b7382499f1281eb8cb921e5c3ad6de91fe0
@@ -636,6 +640,6 @@ SPEC CHECKSUMS:
   Yoga: f7decafdc5e8c125e6fa0da38a687e35238420fa
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: c80318eb61d9a7bd9aecfef8557aa62637bb3bfe
+PODFILE CHECKSUM: 5a4b4613025a278f6989064caaba15ac8d87abd9
 
 COCOAPODS: 1.12.1
