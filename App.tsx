@@ -32,6 +32,7 @@ type SectionProps = PropsWithChildren<{
 }>;
 
 function App(): JSX.Element {
+  Exponea.checkPushSetup();
   useEffect(() => {
     if (Platform.OS == 'ios') {
       Exponea.requestIosPushAuthorization()
