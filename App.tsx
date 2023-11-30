@@ -32,7 +32,24 @@ type SectionProps = PropsWithChildren<{
 }>;
 
 function App(): JSX.Element {
-  Exponea.checkPushSetup();
+  // Exponea.checkPushSetup();
+  Exponea.setAppInboxProvider({
+    appInboxButton: {
+      textOverride: 'App Inbox',
+      textColor: 'white',
+      backgroundColor: '#00b3db',
+      showIcon: true,
+      textSize: '45px',
+      enabled: true,
+      borderRadius: '5px',
+      textWeight: 'normal',
+    },
+    listView: {
+      list: {
+        backgroundColor: 'white',
+      },
+    },
+  });
   useEffect(() => {
     if (Platform.OS == 'ios') {
       Exponea.requestIosPushAuthorization()
@@ -122,10 +139,7 @@ function App(): JSX.Element {
 
         Exponea.setLogLevel(LogLevel.VERBOSE);
 
-        Exponea.identifyCustomer(
-          {registered: 'showcase_app_user_react_native'},
-          {},
-        );
+        Exponea.identifyCustomer({registered: 'academy_showcase'}, {});
         checkExponeaConfigStatus();
       } else {
         console.log('Exponea SDK already configured.');
@@ -245,7 +259,7 @@ function App(): JSX.Element {
               disabled={!exponeaSDKStatus.running}
             />
             {exponeaSDKStatus.running && (
-              <AppInboxButton style={{width: '100%', height: 50}} />
+              <AppInboxButton style={{width: '100%', height: 45}} />
             )}
           </View>
         </View>
